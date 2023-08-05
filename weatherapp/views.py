@@ -26,16 +26,17 @@ def home(request):
     PARAMS = {'units':'metric'}
     
     try:
+          
           data = requests.get(url,params=PARAMS).json()
           description = data['weather'][0]['description']
           icon = data['weather'][0]['icon']
           temp = data['main']['temp']
           day = datetime.date.today()
 
-          return render(request,'weatherapp/index.html' , {'description':description , 'icon':icon ,'temp':temp , 'day':day , 'city':city })
+          return render(request,'weatherapp/index.html' , {'description':description , 'icon':icon ,'temp':temp , 'day':day , 'city':city , 'exception_occurred':False })
     
     except KeyError:
-          exception_occured = True
+          exception_occurred = True
           messages.error(request,'Entered data is not available to API')   
           # city = 'indore'
           # data = requests.get(url,params=PARAMS).json()
@@ -45,7 +46,7 @@ def home(request):
           # temp = data['main']['temp']
           day = datetime.date.today()
 
-          return render(request,'weatherapp/index.html' ,{'description':'clear sky', 'icon':'01d'  ,'temp':25 , 'day':day , 'city':'indore' , 'exception_occured':exception_occured } )
+          return render(request,'weatherapp/index.html' ,{'description':'clear sky', 'icon':'01d'  ,'temp':25 , 'day':day , 'city':'indore' , 'exception_occurred':exception_occurred } )
                
     
     
