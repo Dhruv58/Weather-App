@@ -1,0 +1,51 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap"
+      rel="stylesheet"
+    />
+</head>
+<body>
+  <div class="container">
+    <h1 class="heading">Weather App</h1>
+    
+    <form method="POST">
+      {% csrf_token %}
+      <input type="text" name="city" placeholder="Enter City">
+      <button type="submit" class="btn">Search</button>
+    </form>
+    <div class="weather">
+      <div class="left">
+        <h2>{{ temp }}&#176; C</h2>
+        <h3>{{ city }}</h3>
+      </div>
+      <div class="right">
+        <div class="icon">
+          <p><img src="http://openweathermap.org/img/w/{{ icon }}.png" width="100px"></p>
+        </div>
+        <div class="condition">
+          <p>{{ description }}</p>
+          <p>{{ day }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{% if exception_occurred %}
+    <script>
+        window.onload = function() {
+            alert("Error fetching weather data for '{{ city }}'. Showing weather data for 'INDORE' instead.");
+        }
+    </script>
+{% endif %}
+
+</body>
+</html>
